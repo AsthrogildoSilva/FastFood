@@ -7,10 +7,16 @@ public class main {
         //Mensagens.obterMensagem(10);
 
         // Empréstimo
-        System.out.println("Exercício empréstimo");
-        Emprestimo.calcular(1000, Emprestimo.getDuasParcelas());
-        Emprestimo.calcular(1000, Emprestimo.getTresParcelas());
-        Emprestimo.calcular(1000, 5);
+        //System.out.println("Exercício empréstimo");
+        //Emprestimo.calcular(1000, Emprestimo.getDuasParcelas());
+        //Emprestimo.calcular(1000, Emprestimo.getTresParcelas());
+        //Emprestimo.calcular(1000, 5);
+
+//        AreaQuadradoRetanguçoTrapezio.areaQuadrado(20, 5);
+//        AreaQuadradoRetanguçoTrapezio.areaTrapezio(20, 10, 5);
+//        AreaQuadradoRetanguçoTrapezio.areaRetangulo(20, 10);
+
+          ReturnMetodos.deMaior(ReturnMetodos.idadeAtual(1987));
 
     }
 }
