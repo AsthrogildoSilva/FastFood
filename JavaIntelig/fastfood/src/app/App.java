@@ -4,8 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
-import db.*;
-import model.entities.Cliente;
+import java.util.List;
+import java.util.ArrayList;
+import db.Dbfastfoodad;
+import java.sql.ResultSet;
+import model.entities.*;
 
 public class App {
 
@@ -51,7 +54,7 @@ public class App {
     public static void excluiDados(String Cpf) {
 
         String sql = "DELETE FROM clientes WHERE cpf = ?";
-        Connection conn = db.getConnection();
+        Connection conn = Dbfastfoodad.getConnection();
         PreparedStatement stmt = null;
         try {
             stmt = conn.prepareStatement(sql);
@@ -70,17 +73,19 @@ public class App {
     // INSERT
     private Connection connection;
 
-    public Conexao() {
-        this.connection = new ConnectionFactory().getConnection();
+    public void Conexao() {
+        this.connection = Dbfastfoodad.getConnection();
     }
 
     public void adiciona(Cliente cliente) {
         String sql = "insert into CLIENTE (Nome,Cpf,idpedido) VALUES (?,?,?)";
 
         try {
+            PreparedStatement stmt = this.connection
+                    .prepareStatement("select * from FastFood");
             stmt.setString(1, cliente.getNome());
             stmt.setString(2, cliente.getCpf());
-            stmt.setString(3, cliente.getIdpedido());
+            stmt.setInt(3, cliente.getIdpedido());
 
             stmt.execute();
             stmt.close();
@@ -90,26 +95,26 @@ public class App {
     }
 
     //SELECT
-    public List<FastFood> getLista() {
+    public List<Cliente> getLista() {
 
         try {
-            List<FastFood> FastFood = new ArrayList<FastFood>();
+            List<Cliente> listaCliente = new ArrayList<Cliente>();
             PreparedStatement stmt = this.connection
                     .prepareStatement("select * from FastFood");
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
 
-                FastFood FastFood = new FastFood();
-                FastFood.setId(rs.getLong("id"));
-                FastFood.setNome(rs.getString("nome"));
-                FastFood.setCPF(rs.getString("email"))
+                Cliente cliente = new Cliente();
+                cliente.setIdpedido(rs.getInt("id"));
+                cliente.setNome(rs.getString("nome"));
+                cliente.setCpf(rs.getString("email"));
 
-                FastFood.add(FastFood);
+                listaCliente.add(cliente);
             }
             rs.close();
             stmt.close();
-            return FastFood;
+            return listaCliente;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
